@@ -4,15 +4,13 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.3'
 
 gem 'rails', '6.1.3.1' #'~> 6.1.3', '>= 6.1.3.1'
-
+gem 'bcrypt', '3.1.16'
 gem 'bootstrap-sass', '3.4.1'
 gem 'puma', '5.2.2' #'~> 5.0'
 gem 'sass-rails', '6.0.0' #'>= 6'
 gem 'webpacker', '5.3.0' #'~> 5.0'
 gem 'turbolinks', '5.2.1' #'~> 5'
 gem 'jbuilder', '2.11.2' #'~> 2.7'
-
-#gem 'bcrypt', '~> 3.1.7'
 
 # gem 'image_processing', '~> 1.2'
 
