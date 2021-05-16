@@ -1,6 +1,11 @@
 #
 # ユーザーモデル定義
 #
+# 生成に利用したrailsコマンド
+# rails generate model User name:string email:string
+# rails generate migration add_index_to_users_email
+# rails generate migration add_password_digest_to_users password_digest:string
+#
 class User < ApplicationRecord
   # データ保存前にメアド文字列をすべて小文字に変換する
   # これは、DB内で大文字小文字を区別を無くすため（メアドというものはそういうものなので）
