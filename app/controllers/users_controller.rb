@@ -16,10 +16,14 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     #debugger
     if @user.save
-      # 以下は、redirect_to("/users/#{@user.id}")と同じ意味
-      # @userに飛ばしたいって？んじゃぁ、user_urlに、@user.idを渡すってことだね？OK　ってな感じ
-      # ちなみに、user_urlときたら、"/users"と解釈してくれる。
+      # 登録成功なので、ログインする
+      log_in @user
+      # flashを設定する。次のリダイレクト先でflashをアクセス可能となる。
       flash[:success] = "Welcome to the Sample App!"
+
+      # 以下は、redirect_to("/users/#{@user.id}")と同じ意味
+      # @userに飛ばしたいって？んじゃぁ、users_urlに、@user.idを渡すってことだね？OK　ってな感じ
+      # ちなみに、users_urlときたら、"/users"と解釈してくれる。
       redirect_to @user
     else
       render 'new'

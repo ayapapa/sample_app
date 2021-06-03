@@ -1,2 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+# test用ユーザ定義
+# user = users(:michael)といったような利用が出来る
+michael:
+  name: Michael Example
+  email: michael@example.com
+  # パスワードハッシュはUserクラスを利用。fixtureではERb利用が出来るということ
+  password_digest: <%= User.digest('password') %>
+
+
