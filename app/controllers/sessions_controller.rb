@@ -20,6 +20,9 @@ class SessionsController < ApplicationController
       # log_inはSessionsHelperで定義されたメソッド
       log_in user
 
+      # 永続化
+      remember user
+
       # 以下の実行により、/users/#{user.id}へ飛ばす
       # 次のrailsおよびrubyのルール等により、redirect_to user
       # と書くだけで良い！
@@ -44,7 +47,10 @@ class SessionsController < ApplicationController
 
   # セッション削除(log-out)
   def destroy
-    log_out
+    # Helperのlog_outメソッドを呼ぶ
+    log_out if logged_in?
+    # ルートページへ飛ばす。root_urlは、rootのurlを返す。
+    #   ちなみに、root_pathは、/を返す。help_pathは、/helpを、、などなど
     redirect_to root_url
   end
 end

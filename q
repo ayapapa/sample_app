@@ -27,9 +27,6 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6 }, presence: true
 
   # クラスメソッド
-  #  static methodのようなもの
-  #  User.digest("test")と呼べるが、
-  #  user=User.first, user.digest("test")とは呼べない
   # 渡された文字列のハッシュ値を返す
   def User.digest(string)
     # test等にて最小コストを要求されることを想定し、その場合は最小コストとする
@@ -54,20 +51,7 @@ class User < ApplicationRecord
 
   # 渡されたトークンがダイジェストと一致したらtrueを返す
   def authenticated?(remember_token)
-    # DBにremember_digestが無い(nil)の場合は、ログインしていない状態なので、
-    # falseを返す。
-    return false if remember_digest.nil?
-
-    # DBのremember_digest値をハッシュ値として渡したpasswordインスタンス
-    # で、本メソッドの引数であるremember_tokenがpassword(のハッシュ値)と
-    # 合致するか否かをチェック
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
-  end
-
-  # ユーザーのログイン情報を破棄する
-  def forget
-    # DBの永続用ダイジェストを削除する
-    update_attribute(:remember_digest, nil)
   end
 
 end
