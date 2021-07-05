@@ -30,6 +30,7 @@ module SessionsHelper
       @current_user ||= User.find_by(id: user_id)
     # セッションが無い場合かつクッキーが存在すれば、クッキーからユーザーを確定
     elsif (user_id = cookies.signed[:user_id])
+      #raise       # テストがパスすれば、この部分がテストされていないことがわかる
       user = User.find_by(id: user_id)
       # userが存在し、認証できたら、ヘルパーのlog_inメソッドを呼び、
       # current_userにuserを格納する

@@ -9,19 +9,19 @@ class SessionsController < ApplicationController
   # 新規セッション作成
   def create
     # 登録済ユーザか否かを確認するために、dbを検索する
-    user = User.find_by(email: params[:session][:email].downcase)
+    @user = User.find_by(email: params[:session][:email].downcase)
 
     # userがnilでなく、認証できるなら、成功
     # ちなみに、has_secure_passwordをUserモデルに追加したことで、
     # そのオブジェクト内でauthenticateメソッドが使えるようになっている
-    if user && user.authenticate(params[:session][:password])
+    if @user && @user.authenticate(params[:session][:password])
 
       # ユーザーログイン後にユーザー情報のページにリダイレクトする
       # log_inはSessionsHelperで定義されたメソッド
-      log_in user
+      log_in @user
 
       # 永続化
-      remember user
+      params[:session][:remember_me] == '1' ? remember(@user) : forget(@user)
 
       # 以下の実行により、/users/#{user.id}へ飛ばす
       # 次のrailsおよびrubyのルール等により、redirect_to user
@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
       #   idにリンクされるので、.idを省略可
       # * _urlヘルパーは、省略できる
       # * Rubyでは、()は省略できる 
-      redirect_to user
+      redirect_to @user
 
     # 認証失敗の場合は、エラー
     else
